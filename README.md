@@ -43,13 +43,13 @@ Regex	Tier 1/2 pattern matching
 python-dotenv	Loading the Gemini API key from .env
 Project Structure
 Scram Away AI/
-├── app.py                    # Flask server: routes, sessions, per-user state
-├── detection_engine.py       # Core detection logic: all 3 tiers + aggregation
-├── requirements.txt
-├── .env                      # Your Gemini API key (not committed to git)
-├── static/
-│   ├── index.html            # Main dashboard (single-page app)
-│   └── login.html            # Login page
+app.py                    # Flask server: routes, sessions, per-user state
+detection_engine.py       # Core detection logic: all 3 tiers + aggregation
+requirements.txt
+.env                      # Your Gemini API key (not committed to git)
+static/ : 
+index.html            # Main dashboard (single-page app)
+login.html            # Login page
 
 Setup
 1. Install dependencies
