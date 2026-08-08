@@ -88,10 +88,9 @@ Enterprise tools (Bolster, StrongestLayer) protect companies from brand imperson
 
  is free, explains every verdict, and genuinely detects scams in Hindi and Tamil — not just translated output.
 
-Team
+Team Members : 
 Ahana H 
 Nishitha Chinni Hariram
 N P Shrinidhi Vyairavi
-License
 
-Built for Finbehaviour Hackathon, 2026.  Not for production use as-is — see Known Limitations above
+License : Built for Finbehaviour Hackathon, 2026.  Not for production use as-is — see Known Limitations above
