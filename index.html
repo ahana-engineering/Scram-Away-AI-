@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Scram Away AI !!! - Scam Detection Platform</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #0a0d16;
+    color: #e6e8ee;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+  }
+  a { color: inherit; }
+
+  /* Top nav */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px; border-bottom: 1px solid #1c2233;
+    background: #0d1120;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, #6d5ef8, #4338ca);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .brand-name { font-size: 16px; font-weight: 700; letter-spacing: 0.02em; }
+  .brand-name span { color: #8b7bff; }
+  .brand-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+    background: #171c2c; border: 1px solid #2a3150; color: #9aa1b3;
+    padding: 4px 8px; border-radius: 5px; margin-left: 4px;
+  }
+
+  .nav-tabs { display: flex; gap: 6px; }
+  .nav-tab {
+    display: flex; align-items: center; gap: 6px;
+    padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    color: #9aa1b3; cursor: pointer; user-select: none;
+  }
+  .nav-tab.active { background: #4f46e5; color: white; }
+  .nav-tab .count {
+    background: rgba(255,255,255,0.15); font-size: 11px; padding: 1px 7px; border-radius: 999px;
+  }
+  .nav-tab.active .count { background: rgba(255,255,255,0.25); }
+
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .lang-group { display: flex; background: #171c2c; border: 1px solid #2a3150; border-radius: 8px; padding: 3px; }
+  .lang-btn { padding: 6px 12px; font-size: 12px; border-radius: 6px; color: #9aa1b3; cursor: pointer; }
+  .lang-btn.active { background: #2a3150; color: white; }
+  .pro-badge {
+    display: flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, #7a5a12, #a8791d);
+    border: 1px solid #c9992f; color: #ffe9b0;
+    font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .page { max-width: 1180px; margin: 0 auto; padding: 24px 28px 60px; }
+
+  /* Pipeline architecture */
+  .pipeline-card {
+    background: #10142200; border: 1px solid #1c2233; border-radius: 14px;
+    padding: 22px; margin-bottom: 22px;
+  }
+  .pipeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .pipeline-title { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; gap: 8px; }
+  .pipeline-title .dot { width: 7px; height: 7px; border-radius: 50%; background: #6d5ef8; }
+  .pipeline-sub { font-size: 11px; color: #6b7280; font-style: italic; }
+
+  .pipeline-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+  .pstage {
+    border-radius: 10px; padding: 14px 12px; border: 1px solid;
+    min-height: 92px;
+  }
+  .pstage .icon { font-size: 16px; margin-bottom: 10px; opacity: 0.85; }
+  .pstage .title { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; line-height: 1.3; }
+  .pstage .sub { font-size: 10.5px; color: #9aa1b3; line-height: 1.3; }
+  .pstage.c1 { background: #171b28; border-color: #262c40; }
+  .pstage.c2 { background: #171b28; border-color: #262c40; }
+  .pstage.c3 { background: #171b28; border-color: #262c40; }
+  .pstage.c4 { background: #2a1420; border-color: #4a2033; }
+  .pstage.c5 { background: #22183f; border-color: #3a2a63; }
+  .pstage.c6 { background: #2a1c12; border-color: #4a3420; }
+  .pstage.c7 { background: #0f2a24; border-color: #1c4a3f; }
+
+  /* Detector engine section */
+  .section-card {
+    background: #10142200; border: 1px solid #1c2233; border-radius: 14px;
+    padding: 24px; margin-bottom: 20px;
+  }
+  .layer-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #171340; border: 1px solid #362e8a; color: #a99bff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+  }
+  .section-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+  .section-title { font-size: 21px; font-weight: 700; }
+  .privacy-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: #171c2c; border: 1px solid #2a3150; color: #9aa1b3;
+    font-size: 11px; font-style: italic; padding: 7px 14px; border-radius: 999px;
+  }
+
+  .type-tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+  .type-tab {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 18px; border-radius: 9px; font-size: 13px; font-weight: 600;
+    background: #12172680; border: 1px solid #1c2233; color: #9aa1b3; cursor: pointer;
+  }
+  .type-tab.active { background: #1c2140; border-color: #4f46e5; color: #b7b0ff; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+  label { display: block; font-size: 12px; color: #9aa1b3; margin-bottom: 7px; font-weight: 600; }
+  textarea, input, select {
+    width: 100%;
+    background: #0d1120;
+    border: 1px solid #1c2233;
+    border-radius: 9px;
+    color: #e6e8ee;
+    padding: 11px 13px;
+    font-size: 13.5px;
+    font-family: inherit;
+  }
+  textarea { min-height: 100px; resize: vertical; font-family: ui-monospace, monospace; }
+
+  button.scan-btn {
+    margin-top: 18px;
+    background: linear-gradient(135deg, #6d5ef8, #4338ca);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+  button.scan-btn:disabled { opacity: 0.6; cursor: default; }
+  .error { color: #f87171; font-size: 13px; margin-top: 10px; }
+
+  /* Results */
+  .result-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    padding: 5px 12px; border-radius: 7px; letter-spacing: 0.03em;
+  }
+  .badge.Low { background: #10241c; color: #4ade80; border: 1px solid #1c4a3a; }
+  .badge.Medium { background: #241f10; color: #fbbf24; border: 1px solid #4a3f1c; }
+  .badge.High { background: #24160f; color: #fb923c; border: 1px solid #4a2a1c; }
+  .badge.Critical { background: #240f10; color: #f87171; border: 1px solid #4a1c1c; }
+
+  .zero-day-badge {
+    display: none; font-size: 11px; font-weight: 700;
+    background: #1c1440; color: #b794f6; border: 1px solid #3a2f7a;
+    padding: 5px 12px; border-radius: 7px; margin-top: 8px;
+  }
+  .zero-day-badge.show { display: inline-block; }
+
+  .tiers { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .tier-chip { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: #171c2c; color: #6b7280; border: 1px solid #1c2233; }
+  .tier-chip.ran { background: #16233a; color: #5ee0ff; border-color: #234a63; }
+
+  .score-row { display: flex; align-items: center; gap: 22px; margin: 22px 0; }
+  .score-circle {
+    width: 92px; height: 92px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700; flex-shrink: 0;
+    background: conic-gradient(var(--c) calc(var(--pct) * 1%), #171c2c 0);
+  }
+  .score-inner { width: 72px; height: 72px; border-radius: 50%; background: #10142e; display: flex; align-items: center; justify-content: center; }
+
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280; margin-top: 20px; margin-bottom: 8px; font-weight: 700; }
+  .flags { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .flags li { background: #241f10; border: 1px solid #4a3f1c; color: #fbbf24; font-size: 13px; padding: 9px 12px; border-radius: 7px; }
+  .explanation { font-size: 14px; line-height: 1.65; color: #cdd2de; }
+  .action-box { background: #0f2a20; border: 1px solid #1c4a37; color: #4ade80; font-size: 13px; padding: 11px 13px; border-radius: 9px; margin-top: 6px; }
+  .sender { font-size: 12px; color: #6b7280; margin-top: 6px; }
+  .personal-note { font-size: 12px; color: #5ee0ff; margin-top: 10px; background: #0e1e2c; border: 1px solid #1c3a4a; padding: 7px 11px; border-radius: 7px; display: none; }
+  .personal-note.show { display: block; }
+
+  /* Feed / analytics / logs */
+  .feed-item { padding: 12px 0; border-bottom: 1px solid #1c2233; font-size: 13px; display: flex; gap: 12px; align-items: flex-start; }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-time { color: #6b7280; font-size: 11px; white-space: nowrap; margin-top: 2px; min-width: 55px; }
+  .feed-snippet { color: #cdd2de; flex: 1; }
+  .feed-empty, .log-empty { color: #6b7280; font-size: 13px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .stat-box { background: #10142e; border: 1px solid #1c2233; border-radius: 10px; padding: 16px; text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: #9aa1b3; margin-top: 4px; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .hidden { display: none; }
+
+  /* Integrations dock */
+  .integrations-dock {
+    position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px; z-index: 500;
+  }
+  .integration-icon {
+    position: relative;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: #10142e; border: 1px solid #1c2233;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; cursor: default;
+    opacity: 0.85;
+  }
+  .integration-icon .tooltip {
+    position: absolute; right: 58px; top: 50%; transform: translateY(-50%);
+    background: #171c2c; border: 1px solid #2a3150;
+    color: #e6e8ee; font-size: 11px; font-weight: 600;
+    padding: 6px 10px; border-radius: 7px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+  .integration-icon .tooltip .soon {
+    display: block; color: #9aa1b3; font-weight: 400; font-size: 10px; margin-top: 2px;
+  }
+  .integration-icon:hover .tooltip { opacity: 1; }
+  .integration-icon:hover { border-color: #4f46e5; }
+  @media (max-width: 900px) {
+    .integrations-dock { display: none; }
+  }
+
+  /* Toast notifications */
+  #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 10px; }
+  .toast {
+    min-width: 300px; max-width: 360px;
+    background: #171225; border-left: 4px solid #f87171;
+    border-radius: 8px; padding: 14px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    animation: slideIn 0.3s ease-out;
+  }
+  .toast.Medium { border-left-color: #fbbf24; }
+  .toast.High { border-left-color: #fb923c; }
+  .toast.Critical { border-left-color: #f87171; }
+  .toast-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .toast-body { font-size: 12px; color: #9aa1b3; margin-top: 4px; }
+  @keyframes slideIn { from { transform: translateX(40px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes fadeOut { to { opacity: 0; transform: translateX(20px); } }
+
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+  .chart-row.single { grid-template-columns: 1fr; max-width: 460px; }
+
+  /* Engine layout with resizable sidebar */
+  .engine-layout { display: flex; gap: 18px; align-items: flex-start; }
+  .engine-main { flex: 1; min-width: 0; }
+
+  .sidebar-panel {
+    width: 280px; min-width: 220px; max-width: 420px;
+    resize: horizontal; overflow: auto;
+    background: #10142e; border: 1px solid #1c2233; border-radius: 14px;
+    padding: 18px; flex-shrink: 0;
+  }
+  .sidebar-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .sidebar-sub { font-size: 11px; color: #6b7280; margin-bottom: 18px; line-height: 1.4; }
+
+  .source-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+  .source-icon {
+    width: 34px; height: 34px; border-radius: 9px; background: #171c2c;
+    border: 1px solid #232a45; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .source-name { font-size: 12.5px; font-weight: 700; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .notlinked-badge {
+    font-size: 9.5px; font-weight: 700; color: #9aa1b3;
+    background: #1c2233; border: 1px solid #2a3150;
+    padding: 2px 7px; border-radius: 999px;
+  }
+  .source-count { font-size: 11.5px; color: #9aa1b3; margin-top: 3px; }
+  .demo-tag { color: #5ee0ff; }
+
+  .sidebar-divider { height: 1px; background: #1c2233; margin: 6px 0 16px; }
+  .sidebar-total { display: flex; align-items: center; gap: 12px; }
+  .sidebar-total-num { font-size: 26px; font-weight: 700; color: #b7b0ff; }
+  .sidebar-total-label { font-size: 11px; color: #9aa1b3; line-height: 1.4; }
+  .sidebar-resize-hint { font-size: 10px; color: #4b5468; text-align: right; margin-top: 18px; }
+
+  .news-card {
+    border-left: 3px solid #4f46e5; background: #10142e; border-radius: 0 10px 10px 0;
+    padding: 14px 16px; margin-bottom: 14px;
+  }
+  .news-tag {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.03em;
+    background: #171340; color: #a99bff; border: 1px solid #362e8a;
+    padding: 3px 9px; border-radius: 999px; margin-bottom: 8px;
+  }
+  .news-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+  .news-source { font-size: 11px; color: #6b7280; margin-bottom: 8px; }
+  .news-snippet { font-size: 12.5px; color: #cdd2de; line-height: 1.55; }
+
+  .news-tag.cat-upi { background: #171340; color: #a99bff; border-color: #362e8a; }
+  .news-tag.cat-bank { background: #0f2a20; color: #4ade80; border-color: #1c4a37; }
+  .news-tag.cat-shopping { background: #241f10; color: #fbbf24; border-color: #4a3f1c; }
+  .news-tag.cat-telecom { background: #16233a; color: #5ee0ff; border-color: #234a63; }
+  .news-tag.cat-government { background: #24160f; color: #fb923c; border-color: #4a2a1c; }
+  .news-tag.cat-jobs { background: #2a1420; color: #f19bc4; border-color: #4a2033; }
+  .news-tag.cat-investment { background: #240f10; color: #f87171; border-color: #4a1c1c; }
+
+  .news-search-row {
+    display: flex; align-items: center; gap: 10px;
+    background: #0d1120; border: 1px solid #1c2233; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 14px;
+  }
+  .news-search-icon { font-size: 13px; opacity: 0.6; }
+  .news-search-row input {
+    border: none; background: transparent; padding: 0; font-size: 13.5px;
+  }
+  .news-search-row input:focus { outline: none; }
+
+  .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-chip {
+    font-size: 11.5px; font-weight: 600; padding: 7px 14px; border-radius: 999px;
+    background: #171c2c; border: 1px solid #232a45; color: #9aa1b3; cursor: pointer;
+  }
+  .filter-chip.active { background: #4f46e5; border-color: #4f46e5; color: white; }
+
+  .faq-item { border-bottom: 1px solid #1c2233; padding: 12px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .faq-a { font-size: 12.5px; color: #9aa1b3; line-height: 1.55; }
+
+  .ticket-item {
+    background: #10142e; border: 1px solid #1c2233; border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 10px;
+  }
+  .ticket-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .ticket-subject { font-size: 13px; font-weight: 700; }
+  .ticket-status {
+    font-size: 10px; font-weight: 700; background: #241f10; color: #fbbf24;
+    border: 1px solid #4a3f1c; padding: 3px 9px; border-radius: 999px; flex-shrink: 0;
+  }
+  .ticket-message { font-size: 12.5px; color: #9aa1b3; line-height: 1.5; margin-bottom: 6px; }
+  .ticket-time { font-size: 10.5px; color: #4b5468; }
+  .chart-box { background: #10142e; border: 1px solid #1c2233; border-radius: 10px; padding: 18px; }
+  .chart-box-title { font-size: 12px; font-weight: 700; color: #9aa1b3; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div id="toastContainer"></div>
+
+<div class="integrations-dock">
+  <div class="integration-icon">
+    📧
+    <div class="tooltip">Gmail<span class="soon">Connect &mdash; coming soon</span></div>
+  </div>
+  <div class="integration-icon">
+    📨
+    <div class="tooltip">Outlook<span class="soon">Connect &mdash; coming soon</span></div>
+  </div>
+  <div class="integration-icon">
+    📱
+    <div class="tooltip">Phone / SMS<span class="soon">Connect &mdash; coming soon</span></div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🛡️</div>
+    <div class="brand-name"></span>Scram Away AI !!!</span></div>
+    <div class="brand-badge">TIERED DETECTION</div>
+  </div>
+
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="engine" onclick="switchTab('engine')">🛡️ Detector Engine</div>
+    <div class="nav-tab" data-tab="feedTab" onclick="switchTab('feedTab')">📰 News Feed</div>
+    <div class="nav-tab" data-tab="analyticsTab" onclick="switchTab('analyticsTab')">📊 Analytics</div>
+    <div class="nav-tab" data-tab="logsTab" onclick="switchTab('logsTab')">🕐 Scan Logs</div>
+    <div class="nav-tab" data-tab="supportTab" onclick="switchTab('supportTab')">🎧 Support</div>
+  </div>
+
+  <div class="nav-right">
+    <div class="lang-group">
+      <div class="lang-btn active" data-lang="English" onclick="setLang('English')">English</div>
+      <div class="lang-btn" data-lang="Hindi" onclick="setLang('Hindi')">हिंदी</div>
+      <div class="lang-btn" data-lang="Tamil" onclick="setLang('Tamil')">தமிழ்</div>
+    </div>
+    <div id="userInfo" style="font-size:12px; color:#9aa1b3; display:flex; align-items:center; gap:10px;">
+      <span id="usernameDisplay"></span>
+      <a href="/logout" style="color:#f87171; text-decoration:none; font-weight:600;">Logout</a>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="pipeline-card">
+    <div class="pipeline-header">
+      <div class="pipeline-title"><span class="dot"></span>ESCALATION PIPELINE ARCHITECTURE</div>
+      <div class="pipeline-sub">Tiered Detection Flow</div>
+    </div>
+    <div class="pipeline-row">
+      <div class="pstage c1"><div class="icon">🔒</div><div class="title">1. Input &amp; Privacy</div><div class="sub">SMS/Email/URL + Consent</div></div>
+      <div class="pstage c2"><div class="icon">🧭</div><div class="title">2. Tier 1 Rule Filter</div><div class="sub">Fast path URL &amp; sender ID</div></div>
+      <div class="pstage c3"><div class="icon">⚙️</div><div class="title">3. Tier 2 ML Classifier</div><div class="sub">Multilingual pattern vector</div></div>
+      <div class="pstage c4"><div class="icon">🗄️</div><div class="title">Context Input</div><div class="sub">Feed &amp; sender history</div></div>
+      <div class="pstage c5"><div class="icon">✨</div><div class="title">4. Tier 3 LLM Reasoning</div><div class="sub">Gemini AI zero-day intent</div></div>
+      <div class="pstage c6"><div class="icon">🎚️</div><div class="title">5. Dynamic Scoring</div><div class="sub">Aggregate 0-100 risk</div></div>
+      <div class="pstage c7"><div class="icon">▦</div><div class="title">6. Action &amp; Dashboard</div><div class="sub">Warn, block, report &amp; history</div></div>
+    </div>
+  </div>
+
+  <!-- DETECTOR ENGINE TAB -->
+  <div class="tab-content active" id="engine">
+  <div class="engine-layout">
+  <div class="engine-main">
+    <div class="section-card">
+      <div class="layer-pill">LAYER 1: INPUT &amp; PRIVACY GUARD</div>
+      <div class="section-title-row">
+        <div class="section-title">Message Analysis Engine</div>
+        <div class="privacy-pill">🔒 Data is anonymized before processing.</div>
+      </div>
+
+      <div class="type-tabs">
+        <div class="type-tab active" data-type="sms" onclick="setInputType('sms')">💬 Paste SMS</div>
+        <div class="type-tab" data-type="email" onclick="setInputType('email')">✉️ Paste Email</div>
+        <div class="type-tab" data-type="url" onclick="setInputType('url')">🔗 Check URL</div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label id="lblSender">Sender ID or Phone Number (e.g. +919876543210 or AX-SBIINB)</label>
+          <input id="sender" placeholder="care@jio-kyc-update.in">
+        </div>
+        <div>
+          <label id="lblLanguage">Reasoning Output Language</label>
+          <select id="language">
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Tamil">Tamil</option>
+          </select>
+        </div>
+      </div>
+
+      <label id="lblContent">Suspicious Content / Text / Links</label>
+      <textarea id="content" placeholder="URGENT: Your KYC has expired. Update immediately or your SIM will be deactivated in 24 hrs: kyc-update-jio.in/verify"></textarea>
+
+      <button class="scan-btn" id="scanBtn" onclick="runScan()">Analyze message</button>
+      <div id="error" class="error hidden"></div>
+    </div>
+
+    <div id="resultCard" class="section-card hidden">
+      <div class="result-header">
+        <div>
+          <div id="badge" class="badge Low">LOW RISK</div>
+          <div class="zero-day-badge" id="zeroDayBadge">⚡ Zero-day pattern -- caught by Gemini reasoning alone</div>
+          <div id="sender-display" class="sender"></div>
+        </div>
+        <div id="tiers" class="tiers"></div>
+      </div>
+
+      <div id="personalNote" class="personal-note"></div>
+
+      <div class="score-row">
+        <div id="scoreCircle" class="score-circle" style="--pct:0; --c:#4ade80;">
+          <div class="score-inner"><span id="scoreNum">0</span></div>
+        </div>
+        <div style="font-size:13px; color:#9aa1b3;">Risk score out of 100</div>
+      </div>
+
+      <div class="section-label">Detected red flags</div>
+      <ul id="flags" class="flags"></ul>
+
+      <div class="section-label">Explanation</div>
+      <div id="explanation" class="explanation"></div>
+
+      <div class="section-label">Recommended action</div>
+      <div id="action" class="action-box"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-panel" id="sourcesSidebar">
+    <div class="sidebar-title">🔌 Detection Sources</div>
+    <div class="sidebar-sub">Preview only &mdash; not yet linked to live accounts</div>
+
+    <div class="source-row">
+      <div class="source-icon">📧</div>
+      <div class="source-info">
+        <div class="source-name">Gmail <span class="notlinked-badge">Not linked</span></div>
+        <div class="source-count">18 scams flagged <span class="demo-tag">(demo)</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="source-icon">📨</div>
+      <div class="source-info">
+        <div class="source-name">Outlook <span class="notlinked-badge">Not linked</span></div>
+        <div class="source-count">7 scams flagged <span class="demo-tag">(demo)</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="source-icon">📱</div>
+      <div class="source-info">
+        <div class="source-name">SMS <span class="notlinked-badge">Not linked</span></div>
+        <div class="source-count">24 scams flagged <span class="demo-tag">(demo)</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-total">
+      <div class="sidebar-total-num">49</div>
+      <div class="sidebar-total-label">Total scams detected across all sources <span class="demo-tag">(demo data)</span></div>
+    </div>
+
+    <div class="sidebar-resize-hint">↔ drag edge to resize</div>
+  </div>
+  </div>
+  </div>
+
+  <!-- NEWS FEED TAB -->
+  <div class="tab-content" id="feedTab">
+    <div class="section-card">
+      <div class="layer-pill">SCAM AWARENESS</div>
+      <div class="section-title">Financial news &amp; scam alerts</div>
+      <div style="height:4px;"></div>
+      <div style="font-size:12px; color:#6b7280; margin-bottom:16px;">Illustrative sample content for demo purposes</div>
+
+      <div class="news-search-row">
+        <span class="news-search-icon">🔍</span>
+        <input id="newsSearch" placeholder="Search news, articles, blogs..." oninput="filterNews()">
+      </div>
+
+      <div class="filter-chips" id="filterChips">
+        <div class="filter-chip active" data-cat="all" onclick="setNewsFilter('all')">All</div>
+        <div class="filter-chip" data-cat="upi" onclick="setNewsFilter('upi')">UPI</div>
+        <div class="filter-chip" data-cat="bank" onclick="setNewsFilter('bank')">Bank</div>
+        <div class="filter-chip" data-cat="shopping" onclick="setNewsFilter('shopping')">Shopping</div>
+        <div class="filter-chip" data-cat="telecom" onclick="setNewsFilter('telecom')">Telecom/KYC</div>
+        <div class="filter-chip" data-cat="government" onclick="setNewsFilter('government')">Government</div>
+        <div class="filter-chip" data-cat="jobs" onclick="setNewsFilter('jobs')">Jobs</div>
+        <div class="filter-chip" data-cat="investment" onclick="setNewsFilter('investment')">Investment</div>
+      </div>
+
+      <div id="newsList">
+
+        <div class="news-card" data-cat="upi" data-text="upi collect request scams festive season fraud watch weekly">
+          <div class="news-tag cat-upi">UPI</div>
+          <div class="news-title">UPI "collect request" scams on the rise this festive season</div>
+          <div class="news-source">Fraud Watch Weekly &middot; Aug 2026</div>
+          <div class="news-snippet">Fraudsters are increasingly sending fake payment collect requests disguised as money received, tricking users into approving a debit instead. Consumer advisories recommend verifying every UPI notification carefully before approving.</div>
+        </div>
+
+        <div class="news-card" data-cat="upi" data-text="fake upi pin reset re-register phishing link">
+          <div class="news-tag cat-upi">UPI</div>
+          <div class="news-title">"Your UPI PIN is expiring" &mdash; a message that should never exist</div>
+          <div class="news-source">Cyber Safety Corner &middot; Aug 2026</div>
+          <div class="news-snippet">UPI PINs don't expire, but scam messages claiming otherwise continue to circulate, directing victims to re-register through fake links that harvest their PIN and card details.</div>
+        </div>
+
+        <div class="news-card" data-cat="bank" data-text="fake bank security alert lookalike domain login attempt">
+          <div class="news-tag cat-bank">Bank</div>
+          <div class="news-title">How to spot a fake "unusual login attempt" bank email</div>
+          <div class="news-source">Digital Trust Blog &middot; Aug 2026</div>
+          <div class="news-snippet">A common scam format mimics real bank security alerts, using a lookalike domain and a plausible recent-activity hook to pressure victims into "confirming their identity" through a fake portal.</div>
+        </div>
+
+        <div class="news-card" data-cat="bank" data-text="account blocked kyc update urgent bank sms">
+          <div class="news-tag cat-bank">Bank</div>
+          <div class="news-title">"Your account will be blocked today" &mdash; the oldest trick still works</div>
+          <div class="news-source">Scam Awareness Digest &middot; Jul 2026</div>
+          <div class="news-snippet">Despite being one of the most well-known scam formats, urgency-based account-block threats remain effective. This piece breaks down why the pressure tactic still works and how to pause before reacting.</div>
+        </div>
+
+        <div class="news-card" data-cat="shopping" data-text="courier customs fee parcel held scam online shopping">
+          <div class="news-tag cat-shopping">Shopping</div>
+          <div class="news-title">Courier and customs-fee scams targeting online shoppers</div>
+          <div class="news-source">Cyber Safety Corner &middot; Jul 2026</div>
+          <div class="news-snippet">A wave of fake "your parcel is held at customs" messages has been reported, asking for a small fee via unfamiliar payment links. Genuine courier fees are never collected this way.</div>
+        </div>
+
+        <div class="news-card" data-cat="shopping" data-text="fake order delivery address confirm link e-commerce">
+          <div class="news-tag cat-shopping">Shopping</div>
+          <div class="news-title">Fake "confirm your delivery address" links spike during sale season</div>
+          <div class="news-source">Fraud Watch Weekly &middot; Jul 2026</div>
+          <div class="news-snippet">As shopping volume increases, so do lookalike order-confirmation messages. The guide covers how to check an order status directly through the retailer's app instead of clicking an emailed link.</div>
+        </div>
+
+        <div class="news-card" data-cat="telecom" data-text="sim deactivation kyc update telecom scam link">
+          <div class="news-tag cat-telecom">Telecom/KYC</div>
+          <div class="news-title">"Your SIM will be deactivated" KYC scam messages explained</div>
+          <div class="news-source">Digital Trust Blog &middot; Jun 2026</div>
+          <div class="news-snippet">Telecom providers do not deactivate SIM cards over an unsolicited SMS link. This explainer covers how legitimate KYC updates actually happen and what red flags to check first.</div>
+        </div>
+
+        <div class="news-card" data-cat="government" data-text="income tax refund pan link scam government impersonation">
+          <div class="news-tag cat-government">Government</div>
+          <div class="news-title">Fake income tax refund messages impersonate government portals</div>
+          <div class="news-source">Scam Awareness Digest &middot; Jun 2026</div>
+          <div class="news-snippet">Messages claiming a tax refund is pending, asking recipients to "link PAN" through a third-party link, are a growing pattern. Real refund communication happens through official government portals only.</div>
+        </div>
+
+        <div class="news-card" data-cat="jobs" data-text="work from home job offer advance fee scam">
+          <div class="news-tag cat-jobs">Jobs</div>
+          <div class="news-title">"Work from home, earn daily" job offers &mdash; the advance-fee trap</div>
+          <div class="news-source">Fraud Watch Weekly &middot; Jun 2026</div>
+          <div class="news-snippet">Job scams promising high daily pay for simple tasks often ask for a small "registration fee" upfront. Legitimate employers never charge candidates to be hired.</div>
+        </div>
+
+        <div class="news-card" data-cat="investment" data-text="guaranteed returns trading group investment scam telegram whatsapp">
+          <div class="news-tag cat-investment">Investment</div>
+          <div class="news-title">"Guaranteed returns" trading groups on messaging apps &mdash; a red flag checklist</div>
+          <div class="news-source">Cyber Safety Corner &middot; May 2026</div>
+          <div class="news-snippet">Investment groups promising fixed, guaranteed high returns are a consistent scam pattern. No legitimate investment can guarantee returns &mdash; this piece covers how to verify a broker or advisor properly.</div>
+        </div>
+
+        <div class="news-card" data-cat="bank" data-text="lookalike domain phishing email explainer verify link">
+          <div class="news-tag cat-bank">Bank</div>
+          <div class="news-title">Understanding lookalike domains in phishing emails</div>
+          <div class="news-source">Digital Trust Blog &middot; May 2026</div>
+          <div class="news-snippet">A domain like "bank.co.in.verify-secure.net" is designed to be misread at a glance. This explainer covers how to check the real domain of any link before clicking.</div>
+        </div>
+
+        <div class="news-card" data-cat="upi" data-text="lucky draw lottery prize claim fee scam sms">
+          <div class="news-tag cat-upi">UPI</div>
+          <div class="news-title">Fake lottery and lucky-draw SMS continue to circulate</div>
+          <div class="news-source">Scam Awareness Digest &middot; May 2026</div>
+          <div class="news-snippet">Messages claiming a large cash prize from a draw the recipient never entered remain one of the most common scam formats. Legitimate contests never ask winners to pay a fee to claim a prize.</div>
+        </div>
+
+      </div>
+
+      <div id="newsEmpty" class="feed-empty hidden">No articles match your search or filter.</div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS TAB -->
+  <div class="tab-content" id="analyticsTab">
+    <div class="section-card">
+      <div class="layer-pill">SESSION ANALYTICS</div>
+      <div class="section-title">Detection summary</div>
+      <div style="height:18px;"></div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total scanned</div></div>
+        <div class="stat-box"><div class="stat-num" id="statCritical" style="color:#f87171;">0</div><div class="stat-label">Critical</div></div>
+        <div class="stat-box"><div class="stat-num" id="statHigh" style="color:#fb923c;">0</div><div class="stat-label">High</div></div>
+        <div class="stat-box"><div class="stat-num" id="statMedium" style="color:#fbbf24;">0</div><div class="stat-label">Medium</div></div>
+        <div class="stat-box"><div class="stat-num" id="statLow" style="color:#4ade80;">0</div><div class="stat-label">Low</div></div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-box">
+          <div class="chart-box-title">Risk level distribution (pie)</div>
+          <canvas id="riskPieChart" height="220"></canvas>
+        </div>
+        <div class="chart-box">
+          <div class="chart-box-title">Risk level distribution (bar)</div>
+          <canvas id="riskBarChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCAN LOGS TAB -->
+  <div class="tab-content" id="logsTab">
+    <div class="section-card">
+      <div class="layer-pill">SESSION HISTORY</div>
+      <div class="section-title">Your scan logs</div>
+      <div style="height:16px;"></div>
+      <div id="logsList"><div class="log-empty">No scans yet in this browser session.</div></div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER SUPPORT TAB -->
+  <div class="tab-content" id="supportTab">
+    <div class="section-card">
+      <div class="layer-pill">WE'RE HERE TO HELP</div>
+      <div class="section-title">Customer support</div>
+      <div style="height:4px;"></div>
+      <div style="font-size:12px; color:#6b7280; margin-bottom:20px;">Have a complaint, question, or something that doesn't look right? Let us know.</div>
+
+      <label id="lblSubject">Subject</label>
+      <input id="supportSubject" placeholder="e.g. A legitimate message was flagged as high risk">
+
+      <label id="lblSupportMessage" style="margin-top:16px;">Message</label>
+      <textarea id="supportMessage" style="min-height:110px;" placeholder="Describe your question or issue in detail..."></textarea>
+
+      <button class="scan-btn" id="supportBtn" onclick="submitSupportTicket()">Submit</button>
+      <div id="supportError" class="error hidden"></div>
+      <div id="supportSuccess" class="hidden" style="color:#4ade80; font-size:13px; margin-top:10px;">✓ Submitted &mdash; we'll get back to you soon.</div>
+    </div>
+
+    <div class="section-card">
+      <div class="layer-pill">FREQUENTLY ASKED</div>
+      <div class="section-title" style="font-size:16px;">Quick answers</div>
+      <div style="height:14px;"></div>
+      <div class="faq-item">
+        <div class="faq-q">Is my message content stored?</div>
+        <div class="faq-a">Only an anonymized snippet is stored, and only for messages flagged High or Critical risk. Full raw content is never persisted beyond generating your result.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which languages are supported?</div>
+        <div class="faq-a">English, Hindi, and Tamil &mdash; both for detection and for the explanation you receive.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is this connected to my real Gmail, Outlook, or SMS?</div>
+        <div class="faq-a">Not yet. Paste content in manually for now &mdash; live account integration is a planned next step.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I think a result is wrong?</div>
+        <div class="faq-a">Submit it through the form above &mdash; we review false positives and false negatives to keep improving detection.</div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="layer-pill">YOUR TICKETS</div>
+      <div class="section-title" style="font-size:16px;">Submitted questions &amp; complaints</div>
+      <div style="height:14px;"></div>
+      <div id="ticketsList"><div class="log-empty">No tickets submitted yet.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let inputType = 'sms';
+let riskChart = null;
+let riskBarChart = null;
+
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+
+function showToast(level, score, sender) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + level;
+  const icon = level === 'Critical' ? '🚨' : '⚠️';
+  toast.innerHTML = `
+    <div class="toast-title">${icon} ${level} risk detected</div>
+    <div class="toast-body">Sender: ${sender} &middot; Score: ${score}/100</div>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'fadeOut 0.4s ease-in forwards';
+    setTimeout(() => toast.remove(), 400);
+  }, 6000);
+
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(`${icon} ${level} risk scam detected`, {
+      body: `Sender: ${sender} — Risk score: ${score}/100`,
+    });
+  }
+}
+
+const PLACEHOLDERS = {
+  sms: 'URGENT: Your KYC has expired. Update immediately or your SIM will be deactivated in 24 hrs: kyc-update-jio.in/verify',
+  email: 'Dear Customer, your recent transaction of Rs.24,500 requires verification. Confirm your account details within 24 hours: verify-bank.example.net',
+  url: 'https://kyc-update-jio.in.securepay.example.net/verify',
+};
+
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('active', el.id === tab));
+}
+
+function setLang(lang) {
+  document.querySelectorAll('.lang-btn').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+  document.getElementById('language').value = lang;
+}
+
+function setInputType(type) {
+  inputType = type;
+  document.querySelectorAll('.type-tab').forEach(el => el.classList.toggle('active', el.dataset.type === type));
+  document.getElementById('content').placeholder = PLACEHOLDERS[type];
+  document.getElementById('lblContent').textContent = type === 'url' ? 'URL to check' : 'Suspicious Content / Text / Links';
+}
+
+
+
+async function runScan() {
+  const content = document.getElementById('content').value.trim();
+  const sender = document.getElementById('sender').value.trim() || 'Unknown';
+  const language = document.getElementById('language').value;
+  const errorBox = document.getElementById('error');
+  const btn = document.getElementById('scanBtn');
+
+  errorBox.classList.add('hidden');
+
+  if (!content) {
+    errorBox.textContent = 'Please paste a message or link first.';
+    errorBox.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = true;
+  const stages = ['Running Tier 1: rules filter...', 'Running Tier 2: ML scoring...', 'Running Tier 3: Gemini reasoning...'];
+  let stageIndex = 0;
+  btn.textContent = stages[0];
+  const stageTimer = setInterval(() => {
+    stageIndex = Math.min(stageIndex + 1, stages.length - 1);
+    btn.textContent = stages[stageIndex];
+  }, 500);
+
+  try {
+    const res = await fetch('/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, sender, language })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Scan failed');
+    }
+
+    const data = await res.json();
+    renderResult(data, sender);
+    loadStats();
+    loadLogs();
+  } catch (e) {
+    errorBox.textContent = 'Error: ' + e.message;
+    errorBox.classList.remove('hidden');
+  } finally {
+    clearInterval(stageTimer);
+    btn.disabled = false;
+    btn.textContent = 'Analyze message';
+  }
+}
+
+function renderResult(data, sender) {
+  const card = document.getElementById('resultCard');
+  card.classList.remove('hidden');
+
+  const level = data.warning_level;
+  const badge = document.getElementById('badge');
+  badge.className = 'badge ' + level;
+  badge.textContent = level.toUpperCase() + ' RISK';
+
+  document.getElementById('sender-display').textContent = 'Sender: ' + sender;
+  document.getElementById('zeroDayBadge').classList.toggle('show', !!data.zero_day_catch);
+
+  const personalNote = document.getElementById('personalNote');
+  if (data.is_first_time_sender) {
+    personalNote.textContent = "First time you've seen this sender.";
+  } else {
+    personalNote.textContent = `You've seen this sender ${data.sender_seen_count} times this session.` +
+      (data.repeat_sender_penalty_applied ? ' Risk score slightly increased due to repeat activity.' : '');
+  }
+  personalNote.classList.add('show');
+
+  const colors = { Low: '#4ade80', Medium: '#fbbf24', High: '#fb923c', Critical: '#f87171' };
+  const circle = document.getElementById('scoreCircle');
+  circle.style.setProperty('--pct', data.final_risk_score);
+  circle.style.setProperty('--c', colors[level] || '#4ade80');
+  document.getElementById('scoreNum').textContent = data.final_risk_score;
+
+  const tiersDiv = document.getElementById('tiers');
+  tiersDiv.innerHTML = '';
+  const tierNames = { tier1: 'Rules Filter', tier2: 'ML Scoring', tier3: 'Gemini Reasoning' };
+  for (const key of ['tier1', 'tier2', 'tier3']) {
+    const ran = data.executed_tiers[key];
+    const chip = document.createElement('span');
+    chip.className = 'tier-chip' + (ran ? ' ran' : '');
+    chip.textContent = tierNames[key];
+    tiersDiv.appendChild(chip);
+  }
+
+  const flagsList = document.getElementById('flags');
+  flagsList.innerHTML = '';
+  if (data.flagged_signals && data.flagged_signals.length > 0) {
+    data.flagged_signals.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      flagsList.appendChild(li);
+    });
+  } else {
+    const li = document.createElement('li');
+    li.textContent = 'No red flags detected.';
+    li.style.color = '#9aa1b3';
+    li.style.background = '#171c2c';
+    li.style.border = '1px solid #1c2233';
+    flagsList.appendChild(li);
+  }
+
+  document.getElementById('explanation').textContent = data.explanation;
+  document.getElementById('action').textContent = data.recommended_action;
+
+  if (level === 'High' || level === 'Critical') {
+    showToast(level, data.final_risk_score, sender);
+  }
+}
+
+async function loadLogs() {
+  try {
+    const res = await fetch('/logs');
+    const logs = await res.json();
+    const el = document.getElementById('logsList');
+    if (!logs.length) {
+      el.innerHTML = '<div class="log-empty">No scans yet on this account.</div>';
+      return;
+    }
+    el.innerHTML = '';
+    logs.forEach(l => {
+      const row = document.createElement('div');
+      row.className = 'feed-item';
+      row.innerHTML = `
+        <span class="feed-time">${l.time}</span>
+        <span class="feed-snippet">${l.snippet} <span style="color:#6b7280;">(${l.sender})</span></span>
+        <span class="badge ${l.level}">${l.score}</span>
+      `;
+      el.appendChild(row);
+    });
+  } catch (e) {}
+}
+
+async function loadUsername() {
+  try {
+    const res = await fetch('/whoami');
+    const data = await res.json();
+    if (data.username) {
+      document.getElementById('usernameDisplay').textContent = '👤 ' + data.username;
+    }
+  } catch (e) {}
+}
+
+async function loadStats() {
+  try {
+    const res = await fetch('/analytics');
+    const s = await res.json();
+    document.getElementById('statTotal').textContent = s.total;
+    document.getElementById('statHigh').textContent = s.High;
+    document.getElementById('statCritical').textContent = s.Critical;
+    document.getElementById('statMedium').textContent = s.Medium;
+    document.getElementById('statLow').textContent = s.Low;
+
+    const pieCtx = document.getElementById('riskPieChart');
+    if (riskChart) riskChart.destroy();
+    riskChart = new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Low', 'Medium', 'High', 'Critical'],
+        datasets: [{
+          data: [s.Low, s.Medium, s.High, s.Critical],
+          backgroundColor: ['#4ade80', '#fbbf24', '#fb923c', '#f87171'],
+          borderColor: '#10142e',
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        plugins: { legend: { position: 'bottom', labels: { color: '#cdd2de', font: { size: 11 } } } }
+      }
+    });
+
+    const barCtx = document.getElementById('riskBarChart');
+    if (riskBarChart) riskBarChart.destroy();
+    riskBarChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Low', 'Medium', 'High', 'Critical'],
+        datasets: [{
+          label: 'Messages',
+          data: [s.Low, s.Medium, s.High, s.Critical],
+          backgroundColor: ['#4ade80', '#fbbf24', '#fb923c', '#f87171'],
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#9aa1b3', font: { size: 11 } }, grid: { display: false } },
+          y: { ticks: { color: '#9aa1b3', font: { size: 11 }, precision: 0 }, grid: { color: '#1c2233' } }
+        }
+      }
+    });
+  } catch (e) {}
+}
+
+let currentNewsFilter = 'all';
+
+function setNewsFilter(cat) {
+  currentNewsFilter = cat;
+  document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.dataset.cat === cat));
+  filterNews();
+}
+
+function filterNews() {
+  const query = document.getElementById('newsSearch').value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.news-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const matchesCategory = currentNewsFilter === 'all' || card.dataset.cat === currentNewsFilter;
+    const searchable = (card.dataset.text || '') + ' ' + card.querySelector('.news-title').textContent.toLowerCase();
+    const matchesSearch = !query || searchable.toLowerCase().includes(query);
+    const show = matchesCategory && matchesSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
+  });
+
+  document.getElementById('newsEmpty').classList.toggle('hidden', visibleCount > 0);
+}
+
+async function submitSupportTicket() {
+  const subject = document.getElementById('supportSubject').value.trim();
+  const message = document.getElementById('supportMessage').value.trim();
+  const errorBox = document.getElementById('supportError');
+  const successBox = document.getElementById('supportSuccess');
+  const btn = document.getElementById('supportBtn');
+
+  errorBox.classList.add('hidden');
+  successBox.classList.add('hidden');
+
+  if (!subject || !message) {
+    errorBox.textContent = 'Please fill in both the subject and message.';
+    errorBox.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch('/support', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subject, message })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Submission failed');
+    }
+
+    document.getElementById('supportSubject').value = '';
+    document.getElementById('supportMessage').value = '';
+    successBox.classList.remove('hidden');
+    loadTickets();
+  } catch (e) {
+    errorBox.textContent = 'Error: ' + e.message;
+    errorBox.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit';
+  }
+}
+
+async function loadTickets() {
+  try {
+    const res = await fetch('/support');
+    const tickets = await res.json();
+    const el = document.getElementById('ticketsList');
+    if (!tickets.length) {
+      el.innerHTML = '<div class="log-empty">No tickets submitted yet.</div>';
+      return;
+    }
+    el.innerHTML = '';
+    tickets.forEach(t => {
+      const item = document.createElement('div');
+      item.className = 'ticket-item';
+      item.innerHTML = `
+        <div class="ticket-top">
+          <span class="ticket-subject">${t.subject}</span>
+          <span class="ticket-status">${t.status}</span>
+        </div>
+        <div class="ticket-message">${t.message}</div>
+        <div class="ticket-time">${t.time}</div>
+      `;
+      el.appendChild(item);
+    });
+  } catch (e) {}
+}
+
+loadStats();
+loadLogs();
+loadUsername();
+loadTickets();
+</script>
+</body>
+</html>
