@@ -28,33 +28,7 @@ Feature	Description
 🎧 Customer support	In-app complaint/question submission with ticket history and FAQ
 🔌 Detection sources panel	Preview UI for planned Gmail/Outlook/SMS integrations
 🔒 Privacy-first	Anonymized snippets only, consent-forward design, no long-term raw message storage
-Architecture
-User input (SMS / Email / URL)
-        │
-        ▼
-┌─────────────────────┐
-│ Tier 1: Rule filter  │  Instant — URLs, keywords, sender ID patterns
-│ (always runs)        │  English + Hindi + Tamil
-└─────────┬────────────┘
-          ▼
-┌─────────────────────┐
-│ Tier 2: ML scoring   │  Instant — weighted category pattern matching
-│ (always runs)        │  (urgency, authority impersonation, credential
-└─────────┬────────────┘   requests, financial/UPI action, malware links)
-          ▼
-   Escalate to Tier 3 unless BOTH tiers are completely clean
-          ▼
-┌─────────────────────┐
-│ Tier 3: Gemini AI    │  Conditional — reasons about message intent,
-│ reasoning             │  catches novel/zero-day scam patterns,
-└─────────┬────────────┘   generates the plain-language explanation
-          ▼
-┌─────────────────────┐
-│ Aggregation           │  Weighted score (70% Tier 3 / 20% Tier 2 / 10%
-│                       │  Tier 1 when Tier 3 runs), with a safety floor
-└─────────┬────────────┘   so no single strong signal gets diluted
-          ▼
-   Final risk score (0-100) + Low/Medium/High/Critical + explanation
+
 
 Why this design: most legitimate messages resolve at the free, instant tiers. Only ambiguous or suspicious messages reach the paid Gemini call — this keeps the system fast and cheap at scale while still catching scams that don't match any known pattern.
 
@@ -76,6 +50,7 @@ Scram Away AI/
 ├── static/
 │   ├── index.html            # Main dashboard (single-page app)
 │   └── login.html            # Login page
+
 Setup
 1. Install dependencies
 bash
@@ -88,6 +63,7 @@ GEMINI_API_KEY=your_key_here
 3. Run the app
 bash
 python app.py
+
 4. Open it
 
 Go to http://localhost:5000 — you'll be redirected to a login page. Any username/password works; a new username automatically creates an account (this is a demo-grade login, not production authentication).
